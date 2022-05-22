@@ -17,6 +17,16 @@ class User(db.Model):
         return hash.verify(input, self.password)
 
 
+class Roster(db.Model):
+    __tablename__ = "rosters"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+
+    heroes = db.relationship(
+        "Hero", backref="roster", lazy=True, cascade="all, delete-orphan"
+    )
+
+
 class Hero(db.Model):
     __tablename__ = "heroes"
     id = db.Column(db.Integer, primary_key=True)
