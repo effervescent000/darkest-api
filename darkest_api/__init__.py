@@ -33,13 +33,12 @@ def create_app(test_config=None):
     jwt.init_app(app)
 
     with app.app_context():
-        from .models import User
+        from .models import User, Roster, Hero, Stat, Ability
 
         db.create_all()
 
         from . import auth
 
         app.register_blueprint(auth.bp)
-
 
         return app

@@ -9,6 +9,10 @@ class User(db.Model):
     password = db.Column(db.Text, nullable=False)
     role = db.Column(db.String(200))
 
+    roster = db.relationship(
+        "Roster", backref="user", lazy=True, cascade="all, delete-orphan"
+    )
+
     @staticmethod
     def hash_password(password):
         return hash.hash(password)
@@ -33,6 +37,7 @@ class Hero(db.Model):
     name = db.Column(db.String(20), nullable=False)
     hero_class = db.Column(db.String(20), nullable=False)
     resolve = db.Column(db.Integer, nullable=False, default=0)
+    roster_id = db.Column(db.Integer, db.ForeignKey("rosters.id"))
 
     stats = db.relationship(
         "Stat", backref="hero", lazy=True, cascade="all, delete-orphan"
