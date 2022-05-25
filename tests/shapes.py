@@ -20,8 +20,13 @@ def hero_record_factory(id, *, name=None, hero_class=None, resolve=None, roster_
     }
 
 
-def stat_record_factory(id, *, field=None, value=None, hero_id):
-    return {"id": id, "field": field or "crit", "value": value or 1, "hero_id": hero_id}
+def stat_record_factory(*, id=None, field=None, value=None, hero_id):
+    return {
+        "id": id or randint(1, 100000),
+        "field": field or "crit",
+        "value": value or 1,
+        "hero_id": hero_id,
+    }
 
 
 def hero_graph(
@@ -47,8 +52,8 @@ def hero_graph(
         roster_id=roster["id"],
     )
     stats = [
-        stat_record_factory(1, hero_id=hero["id"]),
-        stat_record_factory(2, field="acc", value=2, hero_id=hero["id"]),
+        stat_record_factory(hero_id=hero["id"]),
+        stat_record_factory(field="acc", value=2, hero_id=hero["id"]),
     ]
 
     return (

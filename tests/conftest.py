@@ -61,9 +61,11 @@ def runner(app):
 
 def populate_test_data():
     data = [
-        hero_graph(1, username="Admin", user_role="admin"),
-        hero_graph(2, username="testUser"),
+        *hero_graph(1, username="Admin", user_role="admin"),
+        *hero_graph(2, username="testUser"),
     ]
     for item in data:
+        if isinstance(item, User):
+            item.password = User.hash_password("test_password")
         db.session.add(item)
         db.session.commit()
