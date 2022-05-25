@@ -7,8 +7,18 @@ from . import db
 
 bp = Blueprint("roster", __name__, url_prefix="/roster")
 one_roster_schema = RosterSchema()
+multi_roster_schema = RosterSchema(many=True)
 
 # GET endpoints
+
+
+@bp.route("/", methods=["GET"])
+@jwt_required()
+def get_rosters():
+    """For now there's only 1 roster per user, but I want to leave room for this to change in the future"""
+    rosters = Roster.query.filter_by(user_id=current_user.id).all()
+    return jsonify(multi_roster_schema.dump(rosters))
+
 
 # POST endpoints
 
