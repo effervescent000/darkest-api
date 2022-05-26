@@ -1,7 +1,7 @@
 import pytest
 from flask_jwt_extended import create_access_token
 
-from .shapes import hero_graph
+from .shapes import hero_graph, HERO_ONE_ID, HERO_TWO_ID
 from darkest_api import create_app, db
 from darkest_api.models import User
 
@@ -50,7 +50,7 @@ def admin_header():
 @pytest.fixture
 def user_header():
     return {
-        "Authorization": f"Bearer {create_access_token(identity=User.query.filter_by(username='test_user').first())}"
+        "Authorization": f"Bearer {create_access_token(identity=User.query.filter_by(username='testUser').first())}"
     }
 
 
@@ -61,8 +61,10 @@ def runner(app):
 
 def populate_test_data():
     data = [
-        *hero_graph(1, username="Admin", user_role="admin"),
-        *hero_graph(2, username="testUser"),
+        *hero_graph(
+            HERO_ONE_ID, username="Admin", user_role="admin", user_id=HERO_ONE_ID
+        ),
+        *hero_graph(HERO_TWO_ID, username="testUser", user_id=HERO_TWO_ID),
     ]
     for item in data:
         if isinstance(item, User):

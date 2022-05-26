@@ -1,6 +1,9 @@
 from random import randint
 from darkest_api.models import User, Roster, Hero, Stat
 
+HERO_ONE_ID = 1
+HERO_TWO_ID = 2
+
 
 def user_record_factory(id, *, username=None, role=None):
     return {"id": id, "username": username or f"abcd-{id}", "role": role}
