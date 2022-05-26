@@ -25,7 +25,6 @@ multi_user_schema = UserSchema(many=True)
 @bp.route("/check", methods=["GET"])
 @jwt_required(optional=True)
 def check_for_logged_in_user():
-    print(current_user)
     if current_user:
         return jsonify(one_user_schema.dump(current_user))
     return jsonify({})
