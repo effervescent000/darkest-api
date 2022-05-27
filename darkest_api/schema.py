@@ -30,7 +30,7 @@ multi_hero_schema = HeroSchema(many=True)
 
 class RosterSchema(ma.Schema):
     class Meta:
-        fields = ("id", "user_id", "heroes")
+        fields = ("id", "name", "user_id", "heroes")
 
     heroes = ma.Nested(multi_hero_schema)
 

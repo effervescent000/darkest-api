@@ -41,4 +41,8 @@ def create_app(test_config=None):
 
         app.register_blueprint(auth.bp)
 
+        from . import roster
+
+        app.register_blueprint(roster.bp)
+
         return app
