@@ -59,6 +59,18 @@ def runner(app):
     return app.test_cli_runner()
 
 
+@pytest.fixture
+def clean_hero_response():
+    """Remove things I don't care about from the hero json dump."""
+
+    def inner(data):
+        for stat in data["stats"]:
+            stat.pop("id", None)
+        return data
+
+    return inner
+
+
 def populate_test_data():
     data = [
         *shapes.hero_graph(
