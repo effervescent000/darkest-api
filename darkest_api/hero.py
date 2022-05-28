@@ -28,7 +28,7 @@ def add_hero():
         name = "Unnamed Hero"
     resolve = data.get("resolve", 1)  # Do heroes start at 1 or 0? I don't remember
     stats = data.get("stats", [])
-    abilities = data.get("abilities", [])
+    abilities = validate_abilities(data.get("abilities", []))
 
     hero = Hero(
         name=name,
@@ -38,12 +38,17 @@ def add_hero():
     )
     for stat in stats:
         hero.stats.append(Stat(field=stat["field"], value=stat["value"]))
-    for ability in abilities:
-        hero.abilities.append(
-            Ability(
-                slot=ability["slot"], level=ability["level"], enabled=ability["enabled"]
+    if abilities is not False:
+        for ability in abilities:
+            hero.abilities.append(
+                Ability(
+                    slot=ability["slot"],
+                    level=ability["level"],
+                    enabled=ability["enabled"],
+                )
             )
-        )
+    else:
+        return {"error": "invalid ability configuration"}, 400
 
     db.session.add(hero)
     db.session.commit()
