@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, current_user
 
-from .models import Hero
+from .models import Hero, Stat, Ability
 from .schema import HeroSchema
 from . import db
 
@@ -27,6 +27,7 @@ def add_hero():
     if not name:
         name = "Unnamed Hero"
     resolve = data.get("resolve", 1)  # Do heroes start at 1 or 0? I don't remember
+    stats = data.get("stats", [])
 
     hero = Hero(
         name=name,
@@ -34,6 +35,8 @@ def add_hero():
         resolve=resolve,
         roster_id=current_user.roster[0].id,
     )
+    for stat in stats:
+        hero.stats.append(Stat(field=stat["field"], value=stat["value"]))
     db.session.add(hero)
     db.session.commit()
 
