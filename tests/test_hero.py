@@ -1,5 +1,6 @@
 import pytest
 import tests.shapes as shapes
+from darkest_api.hero import validate_abilities
 
 
 # GET endpoint tests
@@ -85,3 +86,22 @@ def test_add_hero_invalid(client, user_header, given, expected, should):
 # PUT endpoint tests
 
 # DELETE endpoint tests
+
+# utils tests
+
+
+@pytest.mark.parametrize(
+    "abilities",
+    [
+        (
+            [
+                shapes.ability_record_factory(slot=0),
+                shapes.ability_record_factory(slot=1),
+                shapes.ability_record_factory(slot=2),
+            ]
+        )
+    ],
+)
+def test_validate_abilities_valid(abilities):
+    response = validate_abilities(abilities)
+    assert response

@@ -54,3 +54,22 @@ def add_hero():
 # PUT endpoints
 
 # DELETE endpoints
+
+# utils
+
+
+def validate_abilities(abilities):
+    abilities_lookup = {}
+    enabled_count = 0
+    for ability in abilities:
+        if ability["slot"] not in abilities_lookup:
+            abilities_lookup[ability["slot"]] = ability
+        else:
+            return False
+        if ability["enabled"]:
+            enabled_count += 1
+
+    if enabled_count > 4:
+        return False
+
+    return abilities
