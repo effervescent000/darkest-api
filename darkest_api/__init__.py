@@ -45,4 +45,8 @@ def create_app(test_config=None):
 
         app.register_blueprint(roster.bp)
 
+        from . import hero
+
+        app.register_blueprint(hero.bp)
+
         return app

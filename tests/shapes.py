@@ -1,25 +1,29 @@
+from typing import Union
 from random import randint
 from darkest_api.models import User, Roster, Hero, Stat
 
 HERO_ONE_ID = 1
 HERO_TWO_ID = 2
 
+factory_dict = dict[str, Union[str, int]]
+
 
 def user_record_factory(id, *, username=None, role=None):
     return {"id": id, "username": username or f"abcd-{id}", "role": role}
 
 
-def roster_record_factory(id, *, name=None, user_id):
-    return {"id": id, "name": name, "user_id": user_id}
+def roster_record_factory(id, *, name=None):
+    return {"id": id, "name": name}
 
 
-def hero_record_factory(id, *, name=None, hero_class=None, resolve=None, roster_id):
+def hero_record_factory(
+    id, *, name: str = None, hero_class: str = None, resolve: int = None
+) -> factory_dict:
     return {
         "id": id,
-        "name": name or f"hero-{id}",
+        "name": name,
         "hero_class": hero_class or "hellion",
         "resolve": resolve or 1,
-        "roster_id": roster_id,
     }
 
 
@@ -46,13 +50,12 @@ def hero_graph(
     u_id = user_id or randint(1, 10000)
 
     user = user_record_factory(u_id, username=username, role=user_role)
-    roster = roster_record_factory(id=u_id, user_id=u_id)
+    roster = roster_record_factory(id=u_id)
     hero = hero_record_factory(
         hero_id,
         name=name,
         hero_class=hero_class,
         resolve=resolve,
-        roster_id=roster["id"],
     )
     stats = [
         stat_record_factory(hero_id=hero["id"]),
@@ -61,7 +64,28 @@ def hero_graph(
 
     return (
         User(**user),
-        Roster(**roster),
-        Hero(**hero),
+        Roster(**roster, user_id=user["id"]),
+        Hero(**hero, roster_id=roster["id"]),
         *[Stat(**stat) for stat in stats],
     )
+
+
+def hero_response_factory(
+    id,
+    *,
+    name: str = None,
+    hero_class: str,
+    resolve: int = None,
+    roster_id: int,
+    stats: list = None,
+    abilities: list = None,
+) -> factory_dict:
+    return {
+        "id": id,
+        "name": name or "Unnamed Hero",
+        "hero_class": hero_class,
+        "resolve": resolve or 1,
+        "roster_id": roster_id,
+        "stats": stats or [],
+        "abilities": abilities or [],
+    }

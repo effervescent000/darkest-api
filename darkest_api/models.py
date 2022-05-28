@@ -35,10 +35,10 @@ class Roster(db.Model):
 class Hero(db.Model):
     __tablename__ = "heroes"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(20), nullable=False, default="Unnamed Hero")
     hero_class = db.Column(db.String(20), nullable=False)
     resolve = db.Column(db.Integer, nullable=False, default=0)
-    roster_id = db.Column(db.Integer, db.ForeignKey("rosters.id"))
+    roster_id = db.Column(db.Integer, db.ForeignKey("rosters.id"), nullable=False)
 
     stats = db.relationship(
         "Stat", backref="hero", lazy=True, cascade="all, delete-orphan"

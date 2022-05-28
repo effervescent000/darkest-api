@@ -19,7 +19,15 @@ multi_ability_schema = AbilitySchema(many=True)
 
 class HeroSchema(ma.Schema):
     class Meta:
-        fields = ("id", "name", "hero_class", "resolve", "stats", "abilities")
+        fields = (
+            "id",
+            "name",
+            "hero_class",
+            "resolve",
+            "stats",
+            "abilities",
+            "roster_id",
+        )
 
     stats = ma.Nested(multi_stat_schema)
     abilities = ma.Nested(multi_ability_schema)

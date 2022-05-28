@@ -1,7 +1,7 @@
 import pytest
 from flask_jwt_extended import create_access_token
 
-from .shapes import hero_graph, HERO_ONE_ID, HERO_TWO_ID
+import tests.shapes as shapes
 from darkest_api import create_app, db
 from darkest_api.models import User
 
@@ -61,10 +61,15 @@ def runner(app):
 
 def populate_test_data():
     data = [
-        *hero_graph(
-            HERO_ONE_ID, username="Admin", user_role="admin", user_id=HERO_ONE_ID
+        *shapes.hero_graph(
+            shapes.HERO_ONE_ID,
+            username="Admin",
+            user_role="admin",
+            user_id=shapes.HERO_ONE_ID,
         ),
-        *hero_graph(HERO_TWO_ID, username="testUser", user_id=HERO_TWO_ID),
+        *shapes.hero_graph(
+            shapes.HERO_TWO_ID, username="testUser", user_id=shapes.HERO_TWO_ID
+        ),
     ]
     for item in data:
         if isinstance(item, User):
