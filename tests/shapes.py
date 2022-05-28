@@ -46,6 +46,23 @@ def stat_record_factory(
     }
 
 
+def ability_record_factory(
+    *,
+    id: int = None,
+    slot: int = None,
+    level: int = None,
+    enabled: bool = None,
+    hero_id: int = None,
+) -> factory_dict:
+    return {
+        "id": id or randint(1, 100000),
+        "slot": slot or 0,
+        "level": level or 0,
+        "enabled": enabled or True,
+        "hero_id": hero_id,
+    }
+
+
 def hero_graph(
     hero_id: int,
     *,
