@@ -1,6 +1,6 @@
 from typing import Union
 from random import randint
-from darkest_api.models import User, Roster, Hero, Stat
+from darkest_api.models import Ability, User, Roster, Hero, Stat
 
 HERO_ONE_ID = 1
 HERO_TWO_ID = 2
@@ -73,7 +73,7 @@ def hero_graph(
     username: str = None,
     user_role: str = None,
 ) -> tuple:
-    """Creates a hero, complete with roster, user, and some dummy stats"""
+    """Creates a hero, complete with roster, user, and some dummy stats and abilities"""
     u_id = user_id or randint(1, 10000)
 
     user = user_record_factory(u_id, username=username, role=user_role)
@@ -88,12 +88,17 @@ def hero_graph(
         stat_record_factory(hero_id=hero["id"]),
         stat_record_factory(field="acc", value=2, hero_id=hero["id"]),
     ]
+    abilities = [
+        ability_record_factory(slot=0, level=1, hero_id=hero["id"]),
+        ability_record_factory(slot=2, level=1, hero_id=hero["id"]),
+    ]
 
     return (
         User(**user),
         Roster(**roster, user_id=user["id"]),
         Hero(**hero, roster_id=roster["id"]),
         *[Stat(**stat) for stat in stats],
+        *[Ability(**ability) for ability in abilities],
     )
 
 
