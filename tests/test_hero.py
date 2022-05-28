@@ -29,10 +29,12 @@ import tests.shapes as shapes
                 id=3,
                 hero_class="arbalest",
                 stats=[
-                    shapes.stat_record_factory(id=5, field="crit", value=2, hero_id=3),
-                    shapes.stat_record_factory(
-                        id=6, field="acc_mod", value=3, hero_id=3
-                    ),
+                    shapes.stat_record_factory(field="crit", value=2, hero_id=3),
+                    shapes.stat_record_factory(field="acc_mod", value=3, hero_id=3),
+                ],
+                abilities=[
+                    shapes.ability_record_factory(slot=0, level=1, hero_id=3),
+                    shapes.ability_record_factory(slot=1, level=2, hero_id=3),
                 ],
             ),
             shapes.hero_response_factory(
@@ -40,13 +42,15 @@ import tests.shapes as shapes
                 hero_class="arbalest",
                 roster_id=2,
                 stats=[
-                    shapes.stat_record_factory(id=5, field="crit", value=2, hero_id=3),
-                    shapes.stat_record_factory(
-                        id=6, field="acc_mod", value=3, hero_id=3
-                    ),
+                    shapes.stat_record_factory(field="crit", value=2, hero_id=3),
+                    shapes.stat_record_factory(field="acc_mod", value=3, hero_id=3),
+                ],
+                abilities=[
+                    shapes.ability_record_factory(slot=0, level=1, hero_id=3),
+                    shapes.ability_record_factory(slot=1, level=2, hero_id=3),
                 ],
             ),
-            "Return a hero with stats.",
+            "Return a hero with stats and abilities.",
         ),
     ],
 )

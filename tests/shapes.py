@@ -25,6 +25,7 @@ def hero_record_factory(
     hero_class: str = None,
     resolve: int = None,
     stats: list = None,
+    abilities: list = None,
 ) -> factory_dict:
     return {
         "id": id,
@@ -32,6 +33,7 @@ def hero_record_factory(
         "hero_class": hero_class,
         "resolve": resolve or 1,
         "stats": stats or [],
+        "abilities": abilities or [],
     }
 
 

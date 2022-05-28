@@ -66,6 +66,8 @@ def clean_hero_response():
     def inner(data):
         for stat in data["stats"]:
             stat.pop("id", None)
+        for ability in data["abilities"]:
+            ability.pop("id", None)
         return data
 
     return inner
