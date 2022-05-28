@@ -24,7 +24,7 @@ def hero_record_factory(
     return {
         "id": id,
         "name": name,
-        "hero_class": hero_class or "hellion",
+        "hero_class": hero_class,
         "resolve": resolve or 1,
     }
 

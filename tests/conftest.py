@@ -63,12 +63,16 @@ def populate_test_data():
     data = [
         *shapes.hero_graph(
             shapes.HERO_ONE_ID,
+            hero_class="hellion",
             username="Admin",
             user_role="admin",
             user_id=shapes.HERO_ONE_ID,
         ),
         *shapes.hero_graph(
-            shapes.HERO_TWO_ID, username="testUser", user_id=shapes.HERO_TWO_ID
+            shapes.HERO_TWO_ID,
+            username="testUser",
+            user_id=shapes.HERO_TWO_ID,
+            hero_class="arbalest",
         ),
     ]
     for item in data:
