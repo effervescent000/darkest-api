@@ -8,11 +8,13 @@ HERO_TWO_ID = 2
 factory_dict = dict[str, Union[str, int]]
 
 
-def user_record_factory(id, *, username=None, role=None):
+def user_record_factory(
+    id: int, *, username: str = None, role: str = None
+) -> factory_dict:
     return {"id": id, "username": username or f"abcd-{id}", "role": role}
 
 
-def roster_record_factory(id, *, name=None):
+def roster_record_factory(id: int, *, name: str = None) -> factory_dict:
     return {"id": id, "name": name}
 
 
@@ -27,7 +29,9 @@ def hero_record_factory(
     }
 
 
-def stat_record_factory(*, id=None, field=None, value=None, hero_id):
+def stat_record_factory(
+    *, id: int = None, field: str = None, value: int = None, hero_id: int
+) -> factory_dict:
     return {
         "id": id or randint(1, 100000),
         "field": field or "crit",
@@ -37,15 +41,15 @@ def stat_record_factory(*, id=None, field=None, value=None, hero_id):
 
 
 def hero_graph(
-    hero_id,
+    hero_id: int,
     *,
-    name=None,
-    hero_class=None,
-    resolve=None,
-    user_id=None,
-    username=None,
-    user_role=None,
-):
+    name: str = None,
+    hero_class: str = None,
+    resolve: int = None,
+    user_id: int = None,
+    username: str = None,
+    user_role: str = None,
+) -> tuple:
     """Creates a hero, complete with roster, user, and some dummy stats"""
     u_id = user_id or randint(1, 10000)
 
@@ -71,7 +75,7 @@ def hero_graph(
 
 
 def hero_response_factory(
-    id,
+    id: int,
     *,
     name: str = None,
     hero_class: str,
