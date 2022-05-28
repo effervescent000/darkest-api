@@ -19,13 +19,19 @@ def roster_record_factory(id: int, *, name: str = None) -> factory_dict:
 
 
 def hero_record_factory(
-    id, *, name: str = None, hero_class: str = None, resolve: int = None
+    id: int,
+    *,
+    name: str = None,
+    hero_class: str = None,
+    resolve: int = None,
+    stats: list = None,
 ) -> factory_dict:
     return {
         "id": id,
         "name": name,
         "hero_class": hero_class,
         "resolve": resolve or 1,
+        "stats": stats or [],
     }
 
 
