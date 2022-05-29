@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import pytest
 from flask_jwt_extended import create_access_token
 
@@ -60,15 +61,37 @@ def runner(app):
 
 
 @pytest.fixture
-def clean_hero_response():
+def clean_hero_response(clean_ability_response, clean_stat_response):
     """Remove things I don't care about from the hero json dump."""
 
     def inner(data):
-        for stat in data["stats"]:
-            stat.pop("id", None)
-        for ability in data["abilities"]:
-            ability.pop("id", None)
+        clean_stat_response(data["stats"])
+        clean_ability_response(data["abilities"])
         return data
+
+    return inner
+
+
+@pytest.fixture
+def clean_stat_response():
+    """Remove things that I don't care about from the stat json dump."""
+
+    def inner(stats):
+        for stat in stats:
+            stat.pop("id", None)
+        return stats
+
+    return inner
+
+
+@pytest.fixture
+def clean_ability_response():
+    """Remove things that I don't care about from the ability json dump."""
+
+    def inner(abilities):
+        for ability in abilities:
+            ability.pop("id", None)
+        return abilities
 
     return inner
 
