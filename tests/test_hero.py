@@ -91,7 +91,7 @@ def test_add_hero_invalid(client, user_header, given, expected, should):
 
 
 @pytest.mark.parametrize(
-    "abilities",
+    "given, expected, should",
     [
         (
             [
@@ -102,10 +102,20 @@ def test_add_hero_invalid(client, user_header, given, expected, should):
                 shapes.ability_record_factory(slot=4, enabled=False),
                 shapes.ability_record_factory(slot=5, enabled=False),
                 shapes.ability_record_factory(slot=6, enabled=False),
-            ]
+            ],
+            [
+                shapes.ability_record_factory(slot=0),
+                shapes.ability_record_factory(slot=1),
+                shapes.ability_record_factory(slot=2),
+                shapes.ability_record_factory(slot=3),
+                shapes.ability_record_factory(slot=4, enabled=False),
+                shapes.ability_record_factory(slot=5, enabled=False),
+                shapes.ability_record_factory(slot=6, enabled=False),
+            ],
+            "Return the ability list unaltered.",
         )
     ],
 )
-def test_validate_abilities_valid(abilities):
-    response = validate_abilities(abilities)
-    assert response
+def test_validate_abilities_valid(clean_ability_response, given, expected, should):
+    response = validate_abilities(given)
+    assert clean_ability_response(response) == clean_ability_response(expected)
