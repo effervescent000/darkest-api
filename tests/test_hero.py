@@ -100,7 +100,19 @@ def test_add_hero_valid(
             shapes.hero_record_factory(id=3),
             {"error": "no hero class specified"},
             "Return error if no hero class is specified.",
-        )
+        ),
+        (
+            shapes.hero_record_factory(
+                id=3,
+                hero_class="arbalest",
+                abilities=[
+                    shapes.ability_record_factory(slot=0, level=1, hero_id=3),
+                    shapes.ability_record_factory(slot=0, level=2, hero_id=3),
+                ],
+            ),
+            {"error": "invalid ability configuration"},
+            "Return error if abilities are invalid.",
+        ),
     ],
 )
 def test_add_hero_invalid(client, user_header, given, expected, should):
