@@ -5,6 +5,16 @@ from darkest_api.hero import validate_abilities
 
 # GET endpoint tests
 
+
+def test_get_heroes(client, user_header):
+    response = client.get("/hero/", headers=user_header)
+    assert response.status_code == 200
+
+    data = response.json
+    assert len(data) == 1
+    assert data[0]["id"] == 2
+
+
 # POST endpoint tests
 
 

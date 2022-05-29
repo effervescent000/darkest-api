@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, current_user
 
-from .models import Hero, Stat, Ability
+from .models import Hero, Stat, Ability, Roster
 from .schema import HeroSchema
 from . import db
 
@@ -10,6 +10,12 @@ one_hero_schema = HeroSchema()
 multi_hero_schema = HeroSchema(many=True)
 
 # GET endpoints
+@bp.route("/", methods=["GET"])
+@jwt_required()
+def get_heroes():
+    query = Hero.query.join(Roster).filter(Roster.user_id == current_user.id).all()
+    return jsonify(multi_hero_schema.dump(query))
+
 
 # POST endpoints
 
