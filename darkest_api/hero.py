@@ -54,7 +54,7 @@ def add_hero():
                 )
             )
     else:
-        return {"error": "invalid ability configuration"}, 400
+        return jsonify({"error": "invalid ability configuration"}), 400
 
     db.session.add(hero)
     db.session.commit()
