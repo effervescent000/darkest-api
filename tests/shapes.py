@@ -60,7 +60,7 @@ def ability_record_factory(
         "id": id or randint(1, 100000),
         "slot": slot or 0,
         "level": level or 0,
-        "enabled": False if enabled is True else False,
+        "enabled": False if enabled is False else True,
         "hero_id": hero_id,
     }
 
