@@ -15,6 +15,24 @@ def test_get_heroes(client, user_header):
     assert data[0]["id"] == 2
 
 
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            1,
+            {"status_code": 401, "assertion": lambda x: "error" in x},
+            "Return a 401 for trying to access another user's hero.",
+        )
+    ],
+)
+def test_get_hero(client, user_header, given, expected, should):
+    response = client.get(f"/hero/{given}", headers=user_header)
+    assert response.status_code == expected["status_code"]
+
+    data = response.json
+    assert expected["assertion"](data)
+
+
 # POST endpoint tests
 
 

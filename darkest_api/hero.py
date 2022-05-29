@@ -17,6 +17,14 @@ def get_heroes():
     return jsonify(multi_hero_schema.dump(query))
 
 
+@bp.route("/<id>", methods=["GET"])
+@jwt_required()
+def get_hero(id):
+    hero = Hero.query.get(id)
+    if hero.roster.user_id != current_user.id:
+        return jsonify({"error": "unauthorized"}), 401
+
+
 # POST endpoints
 
 
