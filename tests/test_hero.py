@@ -119,3 +119,34 @@ def test_add_hero_invalid(client, user_header, given, expected, should):
 def test_validate_abilities_valid(clean_ability_response, given, expected, should):
     response = validate_abilities(given)
     assert clean_ability_response(response) == clean_ability_response(expected)
+
+
+@pytest.mark.parametrize(
+    "given, expected, should",
+    [
+        (
+            [
+                shapes.ability_record_factory(slot=0),
+                shapes.ability_record_factory(slot=0),
+            ],
+            False,
+            "Return False if there are >1 ability in the same slot.",
+        ),
+        (
+            [
+                shapes.ability_record_factory(slot=0),
+                shapes.ability_record_factory(slot=1),
+                shapes.ability_record_factory(slot=2),
+                shapes.ability_record_factory(slot=3),
+                shapes.ability_record_factory(slot=4),
+                shapes.ability_record_factory(slot=5, enabled=False),
+                shapes.ability_record_factory(slot=6, enabled=False),
+            ],
+            False,
+            "Return False if >4 abilities are enabled",
+        ),
+    ],
+)
+def test_validate_abilities_invalid(given, expected, should):
+    response = validate_abilities(given)
+    assert response == expected
